@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-
+const URL = "https://mybook-redux-toolkit-training-back.onrender.com"
 export const getBooks = createAsyncThunk("book/getBooks", async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     //api request
     try {
-        const res = await fetch("http://localhost:3004/Books")
+        const res = await fetch(`${URL}/Books`)
         const data = await res.json()
         return data
     } catch (error) {
@@ -17,7 +17,7 @@ export const insertBook = createAsyncThunk("book/insertBook", async (dataBooks, 
     //api req
     try {
         dataBooks.userName = getState().authSlice.name
-        const res = await fetch("http://localhost:3004/Books", {
+        const res = await fetch(`${URL}/Books`, {
             method: "POST",
             body: JSON.stringify(dataBooks),
             headers: {
@@ -33,11 +33,11 @@ export const insertBook = createAsyncThunk("book/insertBook", async (dataBooks, 
     }
 })
 
-export const deleteBook = createAsyncThunk('book/deleteBook', async (item, thunkAPI) => {
+export const deleteBook = createAsyncThunk(`${URL}/deleteBook`, async (item, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     // req api 
     try {
-        await fetch(`http://localhost:3004/Books/${item.id}`, {
+        await fetch(`https://mybook-redux-toolkit-training-back.onrender.com/Books/${item.id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json ; charset=UTF-8"
@@ -49,7 +49,7 @@ export const deleteBook = createAsyncThunk('book/deleteBook', async (item, thunk
     }
 })
 
-export const getBook = createAsyncThunk("book/getBook", async (item, _) => {
+export const getBook = createAsyncThunk(`${URL}/getBook`, async (item, _) => {
     return item
 })
 
